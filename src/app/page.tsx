@@ -1,19 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { HeroSection } from "@/components/home/hero-section";
 import {
   EducationCard,
   type EducationData,
 } from "@/components/home/education-card";
-import { Mail, MapPin, X, GraduationCap, ImageIcon } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  X,
+  GraduationCap,
+  ImageIcon,
+  Phone,
+  Search,
+} from "lucide-react";
 
 const personalInfo = {
   name: "吴杰",
-  tagline:
-    "戏剧与影视硕士研究生。擅长标准化内容生产、数据复盘优化视觉内容，兼顾艺术质感与商业传播力。",
+  tagline: "擅长标准化内容生产 兼顾艺术质感与商业传播力",
   email: "wujie00425@163.com",
+  phone: "15123620776",
   location: "重庆",
   avatar: "/uploads/image-1779634763477.png",
 };
@@ -43,6 +52,19 @@ const education: EducationData[] = [
 
 export default function HomePage() {
   const [selectedEdu, setSelectedEdu] = useState<EducationData | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  function handleSearch() {
+    const q = searchQuery.trim();
+    if (!q) return;
+    router.push(`/portfolio?search=${encodeURIComponent(q)}`);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "Enter") handleSearch();
+  }
 
   return (
     <>
@@ -52,7 +74,33 @@ export default function HomePage() {
         avatar={personalInfo.avatar}
       />
 
-      {/* ===== 个人信息（放上面）===== */}
+      {/* ===== 搜索框 ===== */}
+      <section className="max-w-2xl mx-auto px-6 pb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="relative"
+        >
+          <input
+            ref={searchRef}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="搜索作品..."
+            className="glass-input w-full pl-5 pr-12"
+          />
+          <button
+            onClick={handleSearch}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-[#1D1D1F]/5 transition-colors"
+          >
+            <Search size={16} className="text-[#86868B]" />
+          </button>
+        </motion.div>
+      </section>
+
+      {/* ===== 个人信息 ===== */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -61,35 +109,53 @@ export default function HomePage() {
           transition={{ duration: 0.6 }}
         >
           <p className="section-label">About</p>
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#1a1a1a] mb-8">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#1D1D1F] mb-8">
             个人信息
           </h2>
 
-          <div className="grid sm:grid-cols-2 gap-5">
+          <div className="grid sm:grid-cols-3 gap-4">
             {/* Email */}
             <a
               href={`mailto:${personalInfo.email}`}
-              className="mono-card p-5 flex items-center gap-4 group"
+              className="glass-card p-5 flex items-center gap-4 group"
             >
-              <span className="w-10 h-10 rounded-full bg-[#f5f5f5] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500 flex-shrink-0">
+              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 flex-shrink-0">
                 <Mail size={16} />
               </span>
               <div className="min-w-0">
-                <p className="text-xs text-[#999] mb-0.5">邮箱</p>
-                <p className="text-sm text-[#1a1a1a] truncate">
+                <p className="text-[11px] text-[#86868B] mb-0.5">邮箱</p>
+                <p className="text-sm text-[#1D1D1F] truncate font-[480]">
                   {personalInfo.email}
                 </p>
               </div>
             </a>
 
+            {/* Phone */}
+            <a
+              href={`tel:${personalInfo.phone}`}
+              className="glass-card p-5 flex items-center gap-4 group"
+            >
+              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 flex-shrink-0">
+                <Phone size={16} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] text-[#86868B] mb-0.5">手机</p>
+                <p className="text-sm text-[#1D1D1F] font-[480]">
+                  {personalInfo.phone}
+                </p>
+              </div>
+            </a>
+
             {/* Location */}
-            <div className="mono-card p-5 flex items-center gap-4 group">
-              <span className="w-10 h-10 rounded-full bg-[#f5f5f5] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500 flex-shrink-0">
+            <div className="glass-card p-5 flex items-center gap-4 group">
+              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 flex-shrink-0">
                 <MapPin size={16} />
               </span>
               <div className="min-w-0">
-                <p className="text-xs text-[#999] mb-0.5">城市</p>
-                <p className="text-sm text-[#1a1a1a]">{personalInfo.location}</p>
+                <p className="text-[11px] text-[#86868B] mb-0.5">城市</p>
+                <p className="text-sm text-[#1D1D1F] font-[480]">
+                  {personalInfo.location}
+                </p>
               </div>
             </div>
           </div>
@@ -106,7 +172,7 @@ export default function HomePage() {
           className="mb-12"
         >
           <p className="section-label">Education</p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-[#1a1a1a]">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-[#1D1D1F]">
             教育背景
           </h2>
         </motion.div>
@@ -131,25 +197,24 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#1D1D1F]/40 backdrop-blur-md"
               onClick={() => setSelectedEdu(null)}
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
-              transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-auto"
             >
               <button
                 onClick={() => setSelectedEdu(null)}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white transition-colors shadow-sm"
+                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#1D1D1F]/5 hover:bg-[#1D1D1F]/10 transition-colors"
               >
-                <X size={18} className="text-[#333]" />
+                <X size={18} className="text-[#1D1D1F]" />
               </button>
 
-              {/* School image */}
-              <div className="relative w-full aspect-[16/9] bg-[#f5f5f5] overflow-hidden">
+              <div className="relative w-full aspect-[16/9] bg-[#FBFBFD] overflow-hidden">
                 {selectedEdu.image ? (
                   <img
                     src={selectedEdu.image}
@@ -157,31 +222,31 @@ export default function HomePage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-[#ccc]">
-                    <ImageIcon size={40} className="mb-2" />
-                    <span className="text-xs">暂无图片</span>
+                  <div className="w-full h-full flex flex-col items-center justify-center text-[#86868B]">
+                    <ImageIcon size={40} className="mb-2 opacity-40" />
+                    <span className="text-xs opacity-40">暂无图片</span>
                   </div>
                 )}
               </div>
 
               <div className="p-6 md:p-8">
-                <div className="w-11 h-11 rounded-full bg-[#f5f5f5] flex items-center justify-center mb-4">
-                  <GraduationCap size={20} className="text-[#1a1a1a]" />
+                <div className="w-11 h-11 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center mb-4">
+                  <GraduationCap size={20} className="text-[#1D1D1F]" />
                 </div>
-                <h2 className="text-xl font-semibold text-[#1a1a1a] mb-1">
+                <h2 className="text-xl font-semibold text-[#1D1D1F] mb-1">
                   {selectedEdu.school}
                 </h2>
-                <p className="text-sm text-[#666] mb-4">
+                <p className="text-sm text-[#86868B] mb-4">
                   {selectedEdu.degree} · {selectedEdu.major}
                 </p>
-                <div className="flex gap-4 text-xs text-[#999] mb-6 pb-6 border-b border-[#e5e5e5]">
+                <div className="flex gap-4 text-xs text-[#86868B] mb-6 pb-6 border-b border-[#1D1D1F]/6">
                   <span>{selectedEdu.period}</span>
                   <span>{selectedEdu.location}</span>
                 </div>
-                <h3 className="text-sm font-medium text-[#1a1a1a] mb-3">
+                <h3 className="text-sm font-medium text-[#1D1D1F] mb-3">
                   专业介绍
                 </h3>
-                <p className="text-sm text-[#666] leading-relaxed whitespace-pre-wrap">
+                <p className="text-sm text-[#1D1D1F]/70 leading-relaxed whitespace-pre-wrap">
                   {selectedEdu.detail}
                 </p>
               </div>

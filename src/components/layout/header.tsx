@@ -31,14 +31,14 @@ export function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-xl border-b border-[#e5e5e5]"
+            ? "glass-surface !rounded-none !border-t-0 !border-l-0 !border-r-0 border-b border-[#1D1D1F]/6"
             : "bg-transparent"
         }`}
       >
         <nav className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
             href="/"
-            className="text-base font-semibold tracking-tight text-[#1a1a1a] hover:opacity-60 transition-opacity"
+            className="text-[15px] font-semibold tracking-[-0.01em] text-[#1D1D1F] hover:opacity-60 transition-opacity"
           >
             WU JIE
           </Link>
@@ -49,8 +49,8 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-link text-sm tracking-wide ${
-                  pathname === item.href ? "text-[#1a1a1a]" : ""
+                className={`nav-link ${
+                  pathname === item.href ? "!text-[#1D1D1F]" : ""
                 }`}
               >
                 {item.label}
@@ -60,7 +60,7 @@ export function Header() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 -mr-2 text-[#1a1a1a]"
+            className="md:hidden p-2 -mr-2 text-[#1D1D1F]"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -77,7 +77,7 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-white flex flex-col items-center justify-center gap-10"
+            className="fixed inset-0 z-40 bg-[#FBFBFD] flex flex-col items-center justify-center gap-10"
           >
             {navItems.map((item, i) => (
               <motion.div
@@ -88,8 +88,8 @@ export function Header() {
               >
                 <Link
                   href={item.href}
-                  className={`text-2xl font-medium tracking-tight ${
-                    pathname === item.href ? "text-black" : "text-[#1a1a1a]"
+                  className={`text-2xl font-medium tracking-[-0.01em] ${
+                    pathname === item.href ? "text-[#1D1D1F]" : "text-[#86868B]"
                   }`}
                 >
                   {item.label}

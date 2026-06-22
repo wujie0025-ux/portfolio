@@ -45,7 +45,6 @@ export function CategoryCard({
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
-    if (!rect) return;
     card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
     card.style.setProperty("--my", `${e.clientY - rect.top}px`);
   }
@@ -55,27 +54,27 @@ export function CategoryCard({
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        whileHover={{ y: -4 }}
+        whileHover={{ y: -3 }}
         whileTap={{ scale: 0.98 }}
-        className="glow-card mono-card p-6 md:p-8 h-full group"
+        className="glass-card p-6 md:p-8 h-full"
       >
-        {/* Icon */}
-        <div className="w-12 h-12 rounded-xl bg-[#f5f5f5] flex items-center justify-center mb-5 group-hover:bg-black group-hover:text-white transition-all duration-500">
+        <div className="w-12 h-12 rounded-xl bg-[#1D1D1F]/5 flex items-center justify-center mb-5 group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500">
           <Icon size={23} />
         </div>
 
-        {/* Text */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-[#1a1a1a] mb-1.5">
+            <h3 className="text-lg font-semibold text-[#1D1D1F] mb-1.5">
               {label}
             </h3>
-            <p className="text-sm text-[#888] leading-relaxed">{description}</p>
-            <p className="mt-4 text-xs text-[#bbb]">{count} 个作品</p>
+            <p className="text-sm text-[#86868B] leading-relaxed">
+              {description}
+            </p>
+            <p className="mt-4 text-[11px] text-[#86868B]/40">{count} 个作品</p>
           </div>
           <ArrowUpRight
             size={18}
-            className="text-[#ccc] group-hover:text-black opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 translate-x-1 group-hover:translate-x-0 transition-all duration-500 flex-shrink-0 mt-1"
+            className="text-[#86868B]/20 group-hover:text-[#1D1D1F] opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 translate-x-1 group-hover:translate-x-0 transition-all duration-500 flex-shrink-0 mt-1"
           />
         </div>
       </motion.div>

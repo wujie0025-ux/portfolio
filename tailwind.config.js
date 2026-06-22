@@ -6,16 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        mono: {
-          black:  "#1a1a1a",
-          dark:   "#333333",
-          mid:    "#666666",
-          gray:   "#999999",
-          light:  "#d5d5d5",
-          border: "#e5e5e5",
-          bg:     "#f8f8f8",
-          white:  "#ffffff",
-        },
+        ink: "#1D1D1F",
+        paper: "#FBFBFD",
+        soft: "#86868B",
       },
       fontFamily: {
         sans: [
@@ -29,10 +22,14 @@ module.exports = {
           "sans-serif",
         ],
       },
+      backdropBlur: {
+        glass: "24px",
+      },
       animation: {
         "fade-in": "fadeIn 0.5s ease-out",
         "slide-up": "slideUp 0.6s ease-out",
         "shimmer": "shimmer 2s infinite linear",
+        "sheen": "sheen 1.5s ease-out forwards",
       },
       keyframes: {
         fadeIn: {
@@ -46,6 +43,10 @@ module.exports = {
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        sheen: {
+          "0%": { left: "-100%" },
+          "100%": { left: "120%" },
         },
       },
     },

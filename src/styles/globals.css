@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== Black & White Mono Design System ===== */
+/* ================================================
+   Glass Design System — Wu Jie Portfolio
+   ================================================ */
+
 @layer base {
   * {
     -webkit-font-smoothing: antialiased;
@@ -14,185 +17,206 @@
   }
 
   body {
-    @apply bg-white text-[#1a1a1a];
+    @apply bg-[#FBFBFD] text-[#1D1D1F];
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
       "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.012em;
   }
 
   ::selection {
-    background-color: rgba(0, 0, 0, 0.12);
+    background: rgba(29, 29, 31, 0.10);
+  }
+
+  /* Focus ring — subtle */
+  :focus-visible {
+    outline: 2px solid rgba(29, 29, 31, 0.30);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
-  /* ===== Card ===== */
-  .mono-card {
-    @apply bg-white rounded-2xl border border-[#e5e5e5]
-           transition-all duration-500 ease-out cursor-pointer;
-    position: relative;
-    overflow: hidden;
+  /* ===== Glass Card ===== */
+  .glass-card {
+    @apply relative overflow-hidden cursor-pointer;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 20px;
+    transition:
+      transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      border-color 0.4s ease;
+    box-shadow:
+      0 1px 2px rgba(29, 29, 31, 0.04),
+      0 4px 16px rgba(29, 29, 31, 0.02);
   }
 
-  /* Hover glow effect — radial light that follows mouse */
-  .mono-card::before {
+  /* Glass refractive light — follows mouse via JS */
+  .glass-card::after {
     content: "";
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
     background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(0, 0, 0, 0.04),
-      transparent 40%
+      500px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.30),
+      transparent 60%
     );
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
+    border-radius: inherit;
   }
 
-  .mono-card:hover::before {
+  .glass-card:hover::after {
     opacity: 1;
   }
 
-  .mono-card:hover {
-    @apply -translate-y-1;
-    border-color: #ccc;
+  .glass-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.8);
     box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.06),
-      0 4px 12px rgba(0, 0, 0, 0.03);
+      0 4px 12px rgba(29, 29, 31, 0.06),
+      0 16px 48px rgba(29, 29, 31, 0.04);
+  }
+
+  /* ===== Glass surface — no hover lift, just the material ===== */
+  .glass-surface {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 20px;
+    box-shadow:
+      0 1px 2px rgba(29, 29, 31, 0.04),
+      0 4px 16px rgba(29, 29, 31, 0.02);
   }
 
   /* ===== Buttons ===== */
-  .mono-btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3
-           rounded-full text-sm font-medium
-           transition-all duration-300 ease-out
-           active:scale-95;
+  .glass-btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3;
+    font-size: 14px;
+    font-weight: 510;
+    letter-spacing: -0.01em;
+    border-radius: 100px;
+    transition:
+      all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
-  /* Primary: black bg → grows glow on hover */
-  .mono-btn-primary {
-    @apply mono-btn bg-[#1a1a1a] text-white;
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  .glass-btn:active {
+    transform: scale(0.96);
   }
 
-  .mono-btn-primary:hover {
-    @apply bg-black;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  /* Solid primary */
+  .glass-btn-primary {
+    @apply glass-btn;
+    background: #1D1D1F;
+    color: #FBFBFD;
+  }
+
+  .glass-btn-primary:hover {
+    background: #000;
+    box-shadow:
+      0 8px 32px rgba(29, 29, 31, 0.18);
     transform: translateY(-1px);
   }
 
-  /* Ghost: transparent, border appears on hover */
-  .mono-btn-ghost {
-    @apply mono-btn bg-transparent text-[#666];
+  /* Ghost */
+  .glass-btn-ghost {
+    @apply glass-btn;
+    background: rgba(29, 29, 31, 0.04);
+    color: #1D1D1F;
   }
 
-  .mono-btn-ghost:hover {
-    @apply bg-[#f5f5f5] text-[#1a1a1a];
+  .glass-btn-ghost:hover {
+    background: rgba(29, 29, 31, 0.08);
+    transform: translateY(-1px);
   }
 
-  /* ===== Input ===== */
-  .mono-input {
-    @apply w-full px-4 py-3 rounded-xl border border-[#e5e5e5]
-           bg-white text-[#1a1a1a] text-sm
-           placeholder:text-[#999]
-           focus:outline-none focus:ring-0 focus:border-[#666]
-           transition-all duration-300;
+  /* ===== Glass Input ===== */
+  .glass-input {
+    @apply w-full px-5 py-3.5;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(29, 29, 31, 0.08);
+    border-radius: 16px;
+    font-size: 14px;
+    color: #1D1D1F;
+    outline: none;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .glass-input::placeholder {
+    color: #86868B;
+  }
+
+  .glass-input:focus {
+    border-color: rgba(29, 29, 31, 0.25);
+    box-shadow:
+      0 0 0 4px rgba(29, 29, 31, 0.04);
   }
 
   /* ===== Nav link ===== */
   .nav-link {
-    @apply relative text-sm text-[#888]
-           transition-colors duration-300
-           hover:text-[#1a1a1a];
+    @apply relative text-sm;
+    color: #86868B;
+    font-weight: 480;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
   }
 
   .nav-link::after {
     content: "";
-    @apply absolute -bottom-1 left-0 h-[1.5px] bg-[#1a1a1a]
-           transition-all duration-500 ease-out;
+    @apply absolute -bottom-1 left-0;
+    height: 1.5px;
+    background: #1D1D1F;
     width: 0;
+    transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .nav-link:hover {
+    color: #1D1D1F;
   }
 
   .nav-link:hover::after {
     width: 100%;
   }
 
-  /* ===== Skeleton ===== */
-  .skeleton {
-    @apply bg-gradient-to-r from-[#eee] via-[#f5f5f5] to-[#eee]
-           bg-[length:200%_100%] animate-shimmer rounded-lg;
-  }
-
   /* ===== Section label ===== */
   .section-label {
-    @apply text-xs tracking-[0.2em] uppercase text-[#999] mb-4;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #86868B;
+    margin-bottom: 12px;
+  }
+
+  /* ===== Skeleton ===== */
+  .skeleton {
+    @apply bg-gradient-to-r from-[#E8E8ED] via-[#F0F0F5] to-[#E8E8ED]
+           bg-[length:200%_100%] animate-shimmer rounded-xl;
   }
 
   /* ===== Divider ===== */
-  .mono-divider {
-    @apply w-full h-px bg-[#e5e5e5];
+  .glass-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(29, 29, 31, 0.06);
   }
-}
-
-/* ===== Mouse Glow Card (JS-driven) ===== */
-.glow-card {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.glow-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background: radial-gradient(
-    500px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(0, 0, 0, 0.05),
-    transparent 50%
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
-.glow-card:hover::after {
-  opacity: 1;
-}
-
-/* ===== Shine sweep on hover (buttons / links) ===== */
-.shine {
-  position: relative;
-  overflow: hidden;
-}
-
-.shine::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transition: left 0.6s ease;
-}
-
-.shine:hover::after {
-  left: 100%;
 }
 
 /* ===== Scroll reveal ===== */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
-              transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .reveal.visible {

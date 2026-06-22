@@ -49,7 +49,7 @@ export function HeroSection({ name, tagline, avatar }: HeroSectionProps) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-5 text-base md:text-lg text-[#86868B] max-w-md leading-relaxed font-[480]"
+          className="mt-5 text-base md:text-lg text-[#86868B] max-w-md leading-relaxed font-medium"
         >
           {tagline}
         </motion.p>

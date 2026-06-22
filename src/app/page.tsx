@@ -1,22 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { HeroSection } from "@/components/home/hero-section";
 import {
   EducationCard,
   type EducationData,
 } from "@/components/home/education-card";
-import {
-  Mail,
-  MapPin,
-  X,
-  GraduationCap,
-  ImageIcon,
-  Phone,
-  Search,
-} from "lucide-react";
+import { Mail, MapPin, X, GraduationCap, ImageIcon, Phone } from "lucide-react";
 
 const personalInfo = {
   name: "吴杰",
@@ -52,19 +43,6 @@ const education: EducationData[] = [
 
 export default function HomePage() {
   const [selectedEdu, setSelectedEdu] = useState<EducationData | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  function handleSearch() {
-    const q = searchQuery.trim();
-    if (!q) return;
-    router.push(`/portfolio?search=${encodeURIComponent(q)}`);
-  }
-
-  function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === "Enter") handleSearch();
-  }
 
   return (
     <>
@@ -73,32 +51,6 @@ export default function HomePage() {
         tagline={personalInfo.tagline}
         avatar={personalInfo.avatar}
       />
-
-      {/* ===== 搜索框 ===== */}
-      <section className="max-w-2xl mx-auto px-6 pb-10">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="relative"
-        >
-          <input
-            ref={searchRef}
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="搜索作品..."
-            className="glass-input w-full pl-5 pr-12"
-          />
-          <button
-            onClick={handleSearch}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-[#1D1D1F]/5 transition-colors"
-          >
-            <Search size={16} className="text-[#86868B]" />
-          </button>
-        </motion.div>
-      </section>
 
       {/* ===== 个人信息 ===== */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
@@ -114,46 +66,43 @@ export default function HomePage() {
           </h2>
 
           <div className="grid sm:grid-cols-3 gap-4">
-            {/* Email */}
             <a
               href={`mailto:${personalInfo.email}`}
               className="glass-card p-5 flex items-center gap-4 group"
             >
-              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 flex-shrink-0">
+              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 shrink-0">
                 <Mail size={16} />
               </span>
               <div className="min-w-0">
                 <p className="text-[11px] text-[#86868B] mb-0.5">邮箱</p>
-                <p className="text-sm text-[#1D1D1F] truncate font-[480]">
+                <p className="text-sm text-[#1D1D1F] truncate font-medium">
                   {personalInfo.email}
                 </p>
               </div>
             </a>
 
-            {/* Phone */}
             <a
               href={`tel:${personalInfo.phone}`}
               className="glass-card p-5 flex items-center gap-4 group"
             >
-              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 flex-shrink-0">
+              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 shrink-0">
                 <Phone size={16} />
               </span>
               <div className="min-w-0">
                 <p className="text-[11px] text-[#86868B] mb-0.5">手机</p>
-                <p className="text-sm text-[#1D1D1F] font-[480]">
+                <p className="text-sm text-[#1D1D1F] font-medium">
                   {personalInfo.phone}
                 </p>
               </div>
             </a>
 
-            {/* Location */}
             <div className="glass-card p-5 flex items-center gap-4 group">
-              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 flex-shrink-0">
+              <span className="w-10 h-10 rounded-full bg-[#1D1D1F]/5 flex items-center justify-center group-hover:bg-[#1D1D1F] group-hover:text-white transition-all duration-500 shrink-0">
                 <MapPin size={16} />
               </span>
               <div className="min-w-0">
                 <p className="text-[11px] text-[#86868B] mb-0.5">城市</p>
-                <p className="text-sm text-[#1D1D1F] font-[480]">
+                <p className="text-sm text-[#1D1D1F] font-medium">
                   {personalInfo.location}
                 </p>
               </div>

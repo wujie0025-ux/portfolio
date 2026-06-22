@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "关于我" },
@@ -13,8 +13,11 @@ const navItems = [
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -26,6 +29,16 @@ export function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  function handleSearch() {
+    const q = searchQuery.trim();
+    if (!q) return;
+    router.push(`/portfolio?search=${encodeURIComponent(q)}`);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === "Enter") handleSearch();
+  }
+
   return (
     <>
       <header
@@ -35,16 +48,16 @@ export function Header() {
             : "bg-transparent"
         }`}
       >
-        <nav className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <nav className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
           <Link
             href="/"
-            className="text-[15px] font-semibold tracking-[-0.01em] text-[#1D1D1F] hover:opacity-60 transition-opacity"
+            className="text-[15px] font-semibold tracking-[-0.01em] text-[#1D1D1F] hover:opacity-60 transition-opacity shrink-0"
           >
             WU JIE
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-10">
+          {/* Desktop nav + search */}
+          <div className="hidden md:flex items-center gap-6 flex-1 justify-end">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -56,6 +69,24 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            {/* Search box */}
+            <div className="relative w-48">
+              <input
+                ref={searchRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="搜索..."
+                className="w-full h-9 pl-3 pr-8 text-[13px] bg-[#1D1D1F]/4 border-none rounded-full outline-none placeholder:text-[#86868B] text-[#1D1D1F] transition-all focus:bg-[#1D1D1F]/8"
+              />
+              <button
+                onClick={handleSearch}
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-[#1D1D1F]/10 transition-colors"
+              >
+                <Search size={13} className="text-[#86868B]" />
+              </button>
+            </div>
           </div>
 
           {/* Mobile toggle */}

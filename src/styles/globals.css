@@ -2,194 +2,150 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================================================
-   Glass Design System — Wu Jie Portfolio
-   ================================================ */
-
 @layer base {
   * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
+  html { scroll-behavior: smooth; }
   body {
     @apply bg-[#FBFBFD] text-[#1D1D1F];
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-      "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    letter-spacing: -0.012em;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.008em;
   }
-
-  ::selection {
-    background: rgba(29, 29, 31, 0.10);
-  }
-
-  /* Focus ring — subtle */
-  :focus-visible {
-    outline: 2px solid rgba(29, 29, 31, 0.30);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
+  ::selection { background: rgba(29,29,31,0.10); }
 }
 
 @layer components {
   /* ===== Glass Card ===== */
   .glass-card {
     @apply relative overflow-hidden cursor-pointer;
-    background: rgba(255, 255, 255, 0.55);
+    background: rgba(255,255,255,0.55);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255,255,255,0.55);
     border-radius: 20px;
-    transition:
-      transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-      box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-      border-color 0.4s ease;
-    box-shadow:
-      0 1px 2px rgba(29, 29, 31, 0.04),
-      0 4px 16px rgba(29, 29, 31, 0.02);
+    transition: transform 0.4s cubic-bezier(0.25,0.1,0.25,1), box-shadow 0.4s cubic-bezier(0.25,0.1,0.25,1), border-color 0.4s ease;
+    box-shadow: 0 1px 2px rgba(29,29,31,0.04), 0 4px 16px rgba(29,29,31,0.02);
   }
-
-  /* Glass refractive light — follows mouse via JS */
   .glass-card::after {
     content: "";
     position: absolute;
     inset: 0;
     opacity: 0;
     transition: opacity 0.6s ease;
-    background: radial-gradient(
-      500px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.30),
-      transparent 60%
-    );
+    background: radial-gradient(500px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.30), transparent 60%);
     pointer-events: none;
-    z-index: 2;
+    z-index: 1;
     border-radius: inherit;
   }
-
-  .glass-card:hover::after {
-    opacity: 1;
-  }
-
+  .glass-card:hover::after { opacity: 1; }
   .glass-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.8);
-    box-shadow:
-      0 4px 12px rgba(29, 29, 31, 0.06),
-      0 16px 48px rgba(29, 29, 31, 0.04);
+    border-color: rgba(255,255,255,0.8);
+    box-shadow: 0 4px 12px rgba(29,29,31,0.06), 0 16px 48px rgba(29,29,31,0.04);
   }
+  /* Make sure content sits above the ::after glow */
+  .glass-card > * { position: relative; z-index: 2; }
 
-  /* ===== Glass surface — no hover lift, just the material ===== */
   .glass-surface {
-    background: rgba(255, 255, 255, 0.55);
+    background: rgba(255,255,255,0.55);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.50);
+    border: 1px solid rgba(255,255,255,0.50);
     border-radius: 20px;
-    box-shadow:
-      0 1px 2px rgba(29, 29, 31, 0.04),
-      0 4px 16px rgba(29, 29, 31, 0.02);
+    box-shadow: 0 1px 2px rgba(29,29,31,0.04), 0 4px 16px rgba(29,29,31,0.02);
   }
 
   /* ===== Buttons ===== */
   .glass-btn {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3;
     font-size: 14px;
-    font-weight: 510;
+    font-weight: 500;
     letter-spacing: -0.01em;
     border-radius: 100px;
-    transition:
-      all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: all 0.35s cubic-bezier(0.25,0.1,0.25,1);
+    position: relative;
+    overflow: hidden;
   }
+  .glass-btn:active { transform: scale(0.96); }
 
-  .glass-btn:active {
-    transform: scale(0.96);
-  }
-
-  /* Solid primary */
   .glass-btn-primary {
     @apply glass-btn;
     background: #1D1D1F;
     color: #FBFBFD;
   }
-
   .glass-btn-primary:hover {
     background: #000;
-    box-shadow:
-      0 8px 32px rgba(29, 29, 31, 0.18);
+    box-shadow: 0 8px 32px rgba(29,29,31,0.18);
     transform: translateY(-1px);
   }
 
-  /* Ghost */
   .glass-btn-ghost {
     @apply glass-btn;
-    background: rgba(29, 29, 31, 0.04);
+    background: rgba(29,29,31,0.04);
     color: #1D1D1F;
   }
-
   .glass-btn-ghost:hover {
-    background: rgba(29, 29, 31, 0.08);
+    background: rgba(29,29,31,0.08);
     transform: translateY(-1px);
   }
 
-  /* ===== Glass Input ===== */
+  /* Shine sweep */
+  .glass-btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+  }
+  .glass-btn-primary:hover::after {
+    left: 100%;
+  }
+
+  /* ===== Input ===== */
   .glass-input {
     @apply w-full px-5 py-3.5;
-    background: rgba(255, 255, 255, 0.55);
+    background: rgba(255,255,255,0.55);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(29, 29, 31, 0.08);
+    border: 1px solid rgba(29,29,31,0.08);
     border-radius: 16px;
     font-size: 14px;
+    font-weight: 400;
     color: #1D1D1F;
     outline: none;
-    transition:
-      border-color 0.3s ease,
-      box-shadow 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
-
-  .glass-input::placeholder {
-    color: #86868B;
-  }
-
-  .glass-input:focus {
-    border-color: rgba(29, 29, 31, 0.25);
-    box-shadow:
-      0 0 0 4px rgba(29, 29, 31, 0.04);
-  }
+  .glass-input::placeholder { color: #86868B; }
+  .glass-input:focus { border-color: rgba(29,29,31,0.25); box-shadow: 0 0 0 4px rgba(29,29,31,0.04); }
 
   /* ===== Nav link ===== */
   .nav-link {
-    @apply relative text-sm;
+    @apply relative text-sm font-medium;
     color: #86868B;
-    font-weight: 480;
     letter-spacing: -0.01em;
     transition: color 0.3s ease;
   }
-
   .nav-link::after {
     content: "";
     @apply absolute -bottom-1 left-0;
     height: 1.5px;
     background: #1D1D1F;
     width: 0;
-    transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: width 0.4s cubic-bezier(0.25,0.1,0.25,1);
   }
+  .nav-link:hover { color: #1D1D1F; }
+  .nav-link:hover::after { width: 100%; }
 
-  .nav-link:hover {
-    color: #1D1D1F;
-  }
-
-  .nav-link:hover::after {
-    width: 100%;
-  }
-
-  /* ===== Section label ===== */
+  /* ===== Section ===== */
   .section-label {
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #86868B;
@@ -198,28 +154,9 @@
 
   /* ===== Skeleton ===== */
   .skeleton {
-    @apply bg-gradient-to-r from-[#E8E8ED] via-[#F0F0F5] to-[#E8E8ED]
-           bg-[length:200%_100%] animate-shimmer rounded-xl;
-  }
-
-  /* ===== Divider ===== */
-  .glass-divider {
-    width: 100%;
-    height: 1px;
-    background: rgba(29, 29, 31, 0.06);
+    @apply bg-gradient-to-r from-[#E8E8ED] via-[#F0F0F5] to-[#E8E8ED] bg-[length:200%_100%] animate-shimmer rounded-xl;
   }
 }
 
-/* ===== Scroll reveal ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.25,0.1,0.25,1), transform 0.8s cubic-bezier(0.25,0.1,0.25,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }

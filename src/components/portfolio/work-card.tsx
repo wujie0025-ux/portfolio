@@ -34,10 +34,10 @@ export function WorkCard({
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      whileHover={{ y: -3 }}
+      whileHover={{ scale: 1.015, y: -2 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className="glass-card overflow-hidden !p-0"
+      className="glass-card overflow-hidden !p-0 group"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] bg-[#FBFBFD] overflow-hidden rounded-t-[20px]">

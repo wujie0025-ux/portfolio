@@ -38,9 +38,10 @@ export function EducationCard({ data, index, onClick }: EducationCardProps) {
       onClick={onClick}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.015, y: -2 }}
       viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.6, delay: index * 0.12 }}
-      className="glass-card p-6 md:p-8"
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.12 }}
+      className="glass-card p-6 md:p-8 group"
     >
       {/* Top row: icon + arrow */}
       <div className="flex items-start justify-between mb-5">

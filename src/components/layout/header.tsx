@@ -41,17 +41,11 @@ export function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "glass-surface !rounded-none !border-t-0 !border-l-0 !border-r-0 border-b border-[#1D1D1F]/6"
-            : "bg-transparent"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#1D1D1F]">
         <nav className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
           <Link
             href="/"
-            className="text-[15px] font-semibold tracking-[-0.01em] text-[#1D1D1F] hover:opacity-60 transition-opacity shrink-0"
+            className="text-[15px] font-semibold tracking-[-0.01em] text-white hover:opacity-60 transition-opacity shrink-0"
           >
             WU JIE
           </Link>
@@ -62,8 +56,10 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-link ${
-                  pathname === item.href ? "!text-[#1D1D1F]" : ""
+                className={`text-sm font-medium tracking-[-0.01em] transition-colors duration-300 ${
+                  pathname === item.href
+                    ? "text-white"
+                    : "text-white/60 hover:text-white"
                 }`}
               >
                 {item.label}
@@ -78,20 +74,20 @@ export function Header() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="搜索..."
-                className="w-full h-9 pl-3 pr-8 text-[13px] bg-[#1D1D1F]/4 border-none rounded-full outline-none placeholder:text-[#86868B] text-[#1D1D1F] transition-all focus:bg-[#1D1D1F]/8"
+                className="w-full h-9 pl-3 pr-8 text-[13px] bg-white/15 border-none rounded-full outline-none placeholder:text-white/40 text-white transition-all focus:bg-white/20"
               />
               <button
                 onClick={handleSearch}
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-[#1D1D1F]/10 transition-colors"
               >
-                <Search size={13} className="text-[#86868B]" />
+                <Search size={13} className="text-white/50" />
               </button>
             </div>
           </div>
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 -mr-2 text-[#1D1D1F]"
+            className="md:hidden p-2 -mr-2 text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -120,7 +116,7 @@ export function Header() {
                 <Link
                   href={item.href}
                   className={`text-2xl font-medium tracking-[-0.01em] ${
-                    pathname === item.href ? "text-[#1D1D1F]" : "text-[#86868B]"
+                    pathname === item.href ? "text-[#1D1D1F]" : "text-white/50"
                   }`}
                 >
                   {item.label}
